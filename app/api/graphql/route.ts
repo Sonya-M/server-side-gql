@@ -22,12 +22,7 @@ if (process.env.NODE_ENV === 'production') {
   plugins = [ApolloServerPluginLandingPageLocalDefault({ embed: true })]
 }
 
-const server = new ApolloServer({
-  schema: addMocksToSchema({
-    schema: makeExecutableSchema({ typeDefs }),
-  }),
-  plugins,
-})
+const server = new ApolloServer({ typeDefs, resolvers, plugins })
 
 const handler = startServerAndCreateNextHandler<NextRequest>(server, {})
 
@@ -37,4 +32,4 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   return handler(request)
-} 
+}
